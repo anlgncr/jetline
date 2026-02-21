@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <title> JetLine </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <style>
+    *{
+        user-select: none;
+        box-sizing: border-box;
+    }
+
+    input[type="range"] {
+        pointer-events: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        pointer-events: auto;
+    }
+
+    body{
+        background-color: rgb(180, 180, 180);
+        font-family: monospace;
+        font-size: 1.2em;
+        margin: 0;
+    }
+
+    main{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .main-wrapper{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 1em;
+        background-color: whitesmoke;
+        border-radius: .5em;
+        padding-bottom: 100px;
+        min-width: 300px;
+    }
+
+    .blue-wrapper{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgb(150, 150, 230);
+        padding: .5em;
+        border-radius: 2em;
+    }
+
+    .main-title{
+        font-size:1.2em;
+        font-weight: bold;
+        color:white;
+    }
+
+    .btn-connect{
+        background-color: rgb(115, 115, 202);
+        padding: .5em;
+        color:white;
+        border-radius: 2em;
+        cursor:pointer;
+        font-weight: bold;
+    }
+    
+    .btn-connect[connected]{
+        background-color: rgb(68, 156, 107);
+    }
+
+    .slider-value-wrapper{
+        display:flex;
+        align-items: center;
+        margin-top:1em;
+        justify-content: center;
+        font-size: .9em;
+    }
+
+    .btn-setting{
+        width: 20px;
+        height: 20px;
+        padding: 1em;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(93, 75, 143);
+        color:white;
+    }
+
+    .slider-wrapper{
+        flex:1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .slider{
+        width: 90%;
+        cursor: pointer;
+    }
+
+    .btn{
+        cursor: pointer;
+        user-select: none;
+    }
+    .btn:hover{
+        outline:2px solid white;
+    }
+
+    .btn-cmd{
+        margin-top:1em;
+        padding: .5em;
+        background-color: rgb(107, 146, 219);
+        color:white;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 4px;
+    }
+
+    .range-wrap {
+        position: relative;
+        width: 300px;
+    }
+
+    .icon-container{
+        position: absolute;
+        right: 0;
+        top:0;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+    }
+
+    .drive-container{
+        display: flex;
+        justify-content: space-between;
+    }
+ 
+    .drive-container .btn-cmd{
+        flex:1;
+        margin: .5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .setting-wrapper{
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(202, 202, 234);
+        border-radius: .2em;
+        margin-top:1em;
+        padding: .5em;
+        border-radius: 10px;
+    }
+
+    .setting-title{
+        position: relative;
+        font-weight: bold;
+        color:white;
+        border-radius:5px;
+        padding: .5em;
+        background-color: rgb(104, 103, 161);
+    }
+
+    .setting-container{
+        padding: .5em;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+ 
+
+    .button-container{
+        position: fixed;
+        bottom:0;
+        width: 100%;
+        padding: 1em;
+        background-color: rgb(236, 236, 236);
+        font-size: .8em;
+    }
+
+    .icon-btn{
+        font-size: .7em;
+        margin:.2em;
+    }
+    
+    #trackContainer{
+        position: relative;
+        margin: 20px auto;
+        width: 120px;
+        height: 500px;
+        background-color: rgb(0, 0, 0);
+        outline:3px solid white;
+        border-radius: 10px;
+    }
+
+    #trackLine {
+        position:absolute;
+        left:55px;
+        top:0;
+        bottom:0;
+        width:10px;
+        background:#ffffff;
+        cursor:pointer;
+    }
+
+    .point{
+        position:absolute;
+        width:16px;
+        height:16px;
+        background:#219aeb;
+        outline: 2px solid white;
+        border-radius:50%;
+        transform: translate(-50%, -50%);
+        left:60px;
+        touch-action:none;
+        cursor: pointer;
+    }
+
+    .label-cm {
+        position:absolute;
+        left:20px;
+        top:50%;
+        transform:translateY(-50%);
+        font-size:12px;
+        white-space:nowrap;
+        color: #219aeb;
+        background-color: white;
+        padding: .2em;
+        border-radius: .2em;
+    }
+
+     .label-pulse {
+        position:absolute;
+        left:-50px;
+        top:50%;
+        transform:translateY(-50%);
+        font-size:12px;
+        white-space:nowrap;
+        color: #219aeb;
+        background-color: white;
+        padding: .2em;
+        border-radius: .2em;
+    }
+
+    label, input[type="radio"]{
+        cursor: pointer;
+    }
+
+    .qtr-sensor-container{
+        margin-top: 1em;
+        display: flex;
+        height: 150px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .qtr-sensor-data-container{
+        flex:1;
+        position: relative;
+    }
+    .qtr-sensor-data{
+        background-color: rgb(224, 224, 224);
+        height: 80%;
+        width: 100%;
+    }
+    .qtr-value{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 20%;
+        font-size:0.7em;
+        background-color: #ffffff;
+    }
+
+    @media screen and (min-width: 500px) {
+        .button-container{
+            width: 500px;
+            font-size: 1em;
+        }
+
+        .main-wrapper{
+            width: 500px;
+        }
+    }
+
+    </style>
+</head>
+
+<body>
+
+    <main>
+       <div class="main-wrapper">
+            <div class="blue-wrapper">
+                <div class="main-title">Jetline</div>
+                <div class="btn-connect btn">Bağlan</div>
+            </div> 
+
+            <div class="setting-wrapper">
+                <div class="setting-title"> PID & Hız Ayarı  <div class="icon-container"> <span id="btn-update" class="btn icon-btn">🔄</span> <span id="btn-save" class="btn icon-btn">💾</span></div> </div>
+                <div>
+                    <div class="slider-value-wrapper"> <span class="title">Oran Katsayısı (P) :</span> <span id="val-p">0</span> </div>
+                    <div class="slider-wrapper"> 
+                        <div class="btn-setting btn" id="btn-decrease-p"><b>-</b></div>
+                        <div class="slider-wrapper"><input class="slider" id="slider-p" type="range" step="0.01" min="0" max="5" value="0"></div>
+                        <div class="btn-setting btn" id="btn-increase-p"><b>+</b></div>
+                    </div>
+                </div>
+
+                <!--<div>
+                    <div class="slider-value-wrapper"> <span class="title">İntegral Katsayısı (I) :</span> <span id="val-i">0</span> </div>
+                    <div class="slider-wrapper"> 
+                        <div class="btn-setting btn" id="btn-decrease-i"><b>-</b></div>
+                        <div class="slider-wrapper"><input class="slider" id="slider-i" type="range" step="0.01" min="0" max="10" value="0"></div>
+                        <div class="btn-setting btn" id="btn-increase-i"><b>+</b></div>
+                    </div>
+                </div> -->
+
+                <div>
+                    <div class="slider-value-wrapper"> <span class="title">Türev Katsayısı (D) :</span> <span id="val-d">0</span> </div>
+                    <div class="slider-wrapper"> 
+                        <div class="btn-setting btn" id="btn-decrease-d"><b>-</b></div>
+                        <div class="slider-wrapper"><input class="slider" id="slider-d" type="range" step="0.001" min="0" max="1" value="0"></div>
+                        <div class="btn-setting btn" id="btn-increase-d"><b>+</b></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="slider-value-wrapper"> <span class="title">Ana Hız :</span> <span id="val-s">0</span> </div>
+                    <div class="slider-wrapper"> 
+                        <div class="btn-setting btn" id="btn-decrease-s"><b>-</b></div>
+                        <div class="slider-wrapper"><input class="slider" id="slider-s" type="range" step="1" min="0" max="1000" value="0"></div>
+                        <div class="btn-setting btn" id="btn-increase-s"><b>+</b></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="slider-value-wrapper"> <span class="title">Köşe Dönüş Hızı :</span> <span id="val-t">0</span> </div>
+                    <div class="slider-wrapper"> 
+                        <div class="btn-setting btn" id="btn-decrease-t"><b>-</b></div>
+                        <div class="slider-wrapper"><input class="slider" id="slider-t" type="range" step="1" min="200" max="1000" value="0"></div>
+                        <div class="btn-setting btn" id="btn-increase-t"><b>+</b></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="slider-value-wrapper"> <span class="title">Köşe öncesi hız :</span> <span id="val-c">0</span> </div>
+                    <div class="slider-wrapper"> 
+                        <div class="btn-setting btn" id="btn-decrease-c"><b>-</b></div>
+                        <div class="slider-wrapper"><input class="slider" id="slider-c" type="range" step="1" min="200" max="1000" value="0"></div>
+                        <div class="btn-setting btn" id="btn-increase-c"><b>+</b></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-wrapper">
+                <div class="setting-title"> Köşeye gelmeden önce yavaşla </div>
+                <div class="setting-container">
+                    <label>
+                        <input type="radio" name="corner-mode" value="4" corner-mode="yes" cmd="flag">
+                        Evet
+                    </label>
+
+                    <label>
+                        <input type="radio" name="corner-mode" value="5" corner-mode="no" cmd="flag">
+                        Hayır
+                    </label>
+                </div>
+            </div>
+
+            <div class="setting-wrapper">
+                <div class="setting-title"> Çizgi rengi </div>
+                <div class="setting-container">
+                    <label>
+                        <input type="radio" name="lineColor" value="1" linetype="black" cmd="flag">
+                        Siyah
+                    </label>
+
+                    <label>
+                        <input type="radio" name="lineColor" value="2" linetype="white" cmd="flag">
+                        Beyaz
+                    </label>
+
+                    <label>
+                        <input type="radio" name="lineColor" value="3" linetype="auto" cmd="flag">
+                        Otomatik
+                    </label>
+
+                </div>
+            </div>
+
+            <div class="setting-wrapper">
+                <div class="setting-title"> Pist  <div class="icon-container"> <span id="save-pist" class="btn icon-btn">💾</span> </div></div>
+                <div class="setting-container">
+                    <label>
+                        <input type="radio" name="pist-select" value="6" pist="A" cmd="flag">
+                        Pist (A)
+                    </label>
+
+                    <label>
+                        <input type="radio" name="pist-select" value="7" pist="B" cmd="flag">
+                        Pist (B)
+                    </label>
+                </div>
+                <div>
+                    <div class="slider-value-wrapper"> <span class="title">Pist uzunluğu :</span> <span id="val-m">0</span> </div>
+                    <div class="slider-wrapper"> 
+                        <div class="btn-setting btn" id="btn-decrease-m"><b>-</b></div>
+                        <div class="slider-wrapper"><input class="slider" id="slider-m" type="range" step="1" min="0" max="2000" value="0"></div>
+                        <div class="btn-setting btn" id="btn-increase-m"><b>+</b></div>
+                    </div>
+                </div>
+                <div id="trackContainer">
+                    <div id="trackLine"></div>
+                </div>
+            </div>
+
+            <div class="setting-wrapper">
+                <div class="setting-title"> QTR8A Sensör Verileri <div class="icon-container"> <span id="btn-update-qtr" class="btn icon-btn">🔄</span> </div> </div>
+                    <div class="qtr-sensor-container">
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
+                    </div>
+            </div>
+
+            <div class="setting-wrapper">
+                <div class="setting-title"> HC-SR04 Sensör Verisi <div class="icon-container"> <span id="btn-update-hcsr" class="btn icon-btn">🔄</span> </div> </div>
+                    <div class="setting-container">
+                        <div class="hcsr-sensor-data"> Veri almak için güncelleyin</div>
+                    </div>
+            </div>
+
+            
+
+       </div>
+
+       <div class="button-container">
+            <div class="drive-container">
+                <div id="btn-calibrate" class="btn-cmd btn">  Kalibre Et  </div>
+                <div id="btn-test" class="btn-cmd btn">  Test Sürüşü  </div>
+                <div id="btn-line-follow" class="btn-cmd btn">  Çizgi Takip  </div>
+                <div id="btn-cancel" class="btn-cmd btn">  İptal  </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>  </footer>
+
+
+</body>
+
+</html>
+
+<script>
+    const TIRE_DIAMETER = 6.4;
+    const MAGNET_COUNT = 14;
+
+    let trackLength = 2000;
+    let maxPoints = 90;
+
+    let pulseCounts = [];
+    let pointElements = [];
+
+    const qtrSensorContainer = document.querySelectorAll(".qtr-sensor-data-container");
+
+    function updateQtrSensor(sensorArray){
+        sensorArray.forEach((data, index) => {
+        
+            let color = 255 - Math.round(255 * (data / 4095));
+            let percent = Number(100 * (data/4095)).toFixed(1);
+            
+            const qtrSensorData = qtrSensorContainer[index].querySelector(".qtr-sensor-data");
+            const qtrSensorDataVal = qtrSensorContainer[index].querySelector(".qtr-value");
+
+            qtrSensorData.style.backgroundColor = `rgb(${color}, ${color}, ${color})`;
+            qtrSensorDataVal.textContent = "%" + percent;
+        });
+
+    }
+
+    function changeLineColor(color){
+        if(color == "white"){
+            container.style.backgroundColor = "black";
+            container.style.outline="3px solid white";
+            line.style.backgroundColor = "white";
+        }
+        else{
+            container.style.backgroundColor = "white";
+            container.style.outline="3px solid black";
+            line.style.backgroundColor = "black";
+        }
+    }
+
+    let container = document.getElementById("trackContainer");
+    let line = document.getElementById("trackLine");
+
+    const radios = document.querySelectorAll('input[cmd="flag"]');
+    radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            let value = Number(radio.value);
+            if(value == "1"){
+                changeLineColor("black");
+            }
+            else if(value == "2"){
+                changeLineColor("white");
+            }
+
+            sendData("F:" + value);
+        });
+    });
+
+    const connectButton = document.querySelector(".btn-connect");
+    const SERVICE_UUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
+    const TX_UUID      = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'; // Web → ESP32
+    const RX_UUID      = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'; // ESP32 → Web
+
+    let device = null;
+    let txChar = null;
+    let rxChar = null;
+
+    connectButton.addEventListener("click", connectBLE);
+    async function connectBLE() {
+        try {
+            if (device && device.gatt.connected) {
+                device.gatt.disconnect();
+                connectButton.removeAttribute("connected");
+                connectButton.textContent = "Bağlan";
+                return;
+            }
+
+            device = await navigator.bluetooth.requestDevice({
+                filters: [{ services: [SERVICE_UUID] }]
+            });
+
+            device.addEventListener('gattserverdisconnected', onDisconnected);
+            const server = await device.gatt.connect();
+
+            const service = await server.getPrimaryService(SERVICE_UUID);
+            txChar = await service.getCharacteristic(TX_UUID);
+            rxChar = await service.getCharacteristic(RX_UUID);
+
+            await rxChar.startNotifications();
+            rxChar.addEventListener('characteristicvaluechanged', onReceive);
+
+            connectButton.setAttribute("connected","");
+            connectButton.textContent = "Bağlı 🔗";
+            await sendData("O");
+            await sendData("GET_PID");
+
+        } catch (err) {
+            console.log("Bluetooth bağlantı hatası");
+        }
+    }
+
+    function onReceive(event) {
+        const dataView = event.target?.value;
+        if (!dataView) return;
+
+        /*const text = new TextDecoder().decode(dataView);
+        if (/^[\x20-\x7E\n\r]*$/.test(text))
+            console.log("String message:", text.trim());*/
+
+        const bytes = new Uint8Array(dataView.buffer);
+        /*console.log("Received (hex):", Array.from(bytes)
+            .map(b => b.toString(16).padStart(2,'0')).join(' '));*/
+
+        parseIncomingBytes(bytes);
+    }
+
+    function setPIDValues(values){
+        let i = 0;
+        valueP.textContent = Number(values[0] / 1000).toFixed(2); // (P)ID
+        valueD.textContent = Number(values[1] / 1000).toFixed(3); // PI(D)
+        valueS.textContent = Number(values[2]); // Base speed
+        valueT.textContent = values[3]; // Turning speed
+        valueC.textContent = values[4]; // Corner speed
+
+        let flags = values[5]; // flags
+
+        sliderP.value = valueP.textContent;
+        sliderD.value = valueD.textContent;
+        sliderS.value = valueS.textContent;
+        sliderT.value = valueT.textContent;
+        sliderC.value = valueC.textContent;
+
+        let autoDetect = ((flags & 0x02) !== 0); // auto detect
+
+        if ((flags & 0x01) !== 0) { // black
+            if(!autoDetect)
+                document.querySelector('input[linetype="black"]').checked = true;
+
+            changeLineColor("black");
+        }
+        else { // white
+            if(!autoDetect)
+                document.querySelector('input[linetype="white"]').checked = true;
+
+            changeLineColor("white");
+        }
+
+        if (autoDetect) { 
+            document.querySelector('input[linetype="auto"]').checked = true;
+        }
+
+        if ((flags & 0x04) !== 0) {
+            document.querySelector('input[corner-mode="yes"]').checked = true;
+        } else {
+            document.querySelector('input[corner-mode="no"]').checked = true;
+        }
+
+        if ((flags & 0x08) !== 0) {
+            document.querySelector('input[pist="B"]').checked = true;
+        } else {
+            document.querySelector('input[pist="A"]').checked = true;
+        }
+    }
+
+    function onDisconnected() {
+        txChar = null;
+        rxChar = null;
+    }
+
+    async function sendData(text) {
+        if (!txChar) return;
+        const data = new TextEncoder().encode(text + "\n");
+        await txChar.writeValue(data);
+    }
+
+    window.addEventListener('beforeunload', () => {
+        if (device && device.gatt.connected) {
+            device.gatt.disconnect();
+        }
+    });
+
+
+    //-----------------------------------------------------------------------------
+    const sliderP = document.getElementById("slider-p");
+    let valueP = document.querySelector("#val-p");
+    
+    document.getElementById("btn-increase-p").addEventListener("click", ()=>{
+        let value = Number(sliderP.value) + 0.01;
+
+        if(value > 5){
+            return;
+        }
+
+        sliderP.value = value;
+        valueP.textContent = Number(value).toFixed(2);
+        sendData("P:" + (value * 1000));
+    });
+
+    document.getElementById("btn-decrease-p").addEventListener("click", ()=>{
+        let value = Number(sliderP.value) - 0.01;
+        if(value < 0){
+            return;
+        }
+        
+        sliderP.value = value;
+        valueP.textContent = Number(value).toFixed(2);
+        sendData("P:" + (value * 1000));
+    });
+
+    
+    sliderP.addEventListener("change", () => {
+        console.log("Bırakıldı, değer:", sliderP.value);
+        let value = Number(sliderP.value);
+        sendData("P:" + (value * 1000));
+    });
+
+    sliderP.addEventListener("input", e => {
+        valueP.textContent = Number(sliderP.value).toFixed(2);
+    });
+
+    //------------------------------------------------------------------------------------
+
+    const sliderD = document.getElementById("slider-d");
+    let valueD = document.querySelector("#val-d");
+    
+    document.getElementById("btn-increase-d").addEventListener("click", ()=>{
+        let value = Number(sliderD.value) + 0.001;
+
+        if(value > 1){
+            return;
+        }
+
+        sliderD.value = value;
+        valueD.textContent = Number(value).toFixed(3);
+        sendData("D:" + (value * 1000));
+    });
+
+    document.getElementById("btn-decrease-d").addEventListener("click", ()=>{
+        let value = Number(sliderD.value) - 0.001;
+        if(value < 0){
+            return;
+        }
+        
+        sliderD.value = value;
+        valueD.textContent = Number(value).toFixed(3);
+        sendData("D:" + (value * 1000));
+    });
+
+    
+    sliderD.addEventListener("change", () => {
+        console.log("Bırakıldı, değer:", sliderD.value);
+        let value = Number(sliderD.value);
+        sendData("D:" + (value * 1000));
+    });
+
+    sliderD.addEventListener("input", e => {
+        valueD.textContent = Number(sliderD.value).toFixed(3);
+    });
+
+
+    //------------------------------------------------------------------------------------
+
+    const sliderS = document.getElementById("slider-s");
+    let valueS = document.querySelector("#val-s");
+    
+    document.getElementById("btn-increase-s").addEventListener("click", ()=>{
+        let value = Number(sliderS.value) + 1;
+
+        if(value > 1000){
+            return;
+        }
+
+        sliderS.value = value;
+        valueS.textContent = Number(value);
+        sendData("S:" + value);
+    });
+
+    document.getElementById("btn-decrease-s").addEventListener("click", ()=>{
+        let value = Number(sliderS.value) - 1;
+        if(value < 0){
+            return;
+        }
+        
+        sliderS.value = value;
+        valueS.textContent = Number(value);
+        sendData("S:" + value);
+    });
+
+    sliderS.addEventListener("change", () => {
+        console.log("Bırakıldı, değer:", sliderS.value);
+        let value = Number(sliderS.value);
+        sendData("S:" + value);
+    });
+
+    sliderS.addEventListener("input", e => {
+        valueS.textContent = Number(sliderS.value);
+    });
+
+    //----------------------------------------------------------------------------------------
+    const sliderM = document.getElementById("slider-m");
+    let valueM = document.querySelector("#val-m");
+    
+    document.getElementById("btn-increase-m").addEventListener("click", ()=>{
+        let value = Number(sliderM.value) + 1;
+        if(value > 2000) return;
+    
+        sliderM.value = value;
+        updateTrackLengthSlider(value);
+        setTrackLength(value);
+    });
+
+    document.getElementById("btn-decrease-m").addEventListener("click", ()=>{
+        let value = Number(sliderM.value) - 1;
+        if(value < 0) return;
+        
+        sliderM.value = value;
+        updateTrackLengthSlider(value);
+        setTrackLength(value);
+    });
+
+    sliderM.addEventListener("change", () => {
+        setTrackLength(Number(sliderM.value)); // bırakınca
+    });
+
+    sliderM.addEventListener("input", e => {
+        updateTrackLengthSlider(Number(sliderM.value)); // kaydırınca
+    });
+
+    function updateTrackLengthSlider(val){
+        valueM.textContent = pulseCountToCm(val) + " cm (" + val + " pulse)"; // kaydırınca
+    }
+
+    function pulseCountToCm(pulseCount){
+        let cm = (pulseCount * Math.PI * TIRE_DIAMETER) / MAGNET_COUNT;
+        return Number(cm).toFixed(1);
+    }
+
+    //----------------------------------------------------------------------------- Köşe dönüş hızı
+    const sliderT = document.getElementById("slider-t");
+    let valueT = document.querySelector("#val-t");
+    
+    document.getElementById("btn-increase-t").addEventListener("click", ()=>{
+        let value = Number(sliderT.value) + 10;
+
+        if(value > 1000){
+            return;
+        }
+
+        sliderT.value = value;
+        valueT.textContent = Number(value);
+        sendData("T:" + value);
+    });
+
+    document.getElementById("btn-decrease-t").addEventListener("click", ()=>{
+        let value = Number(sliderT.value) - 10;
+        if(value < 200){
+            return;
+        }
+        
+        sliderT.value = value;
+        valueT.textContent = Number(value);
+        sendData("T:" + value);
+    });
+
+    
+    sliderT.addEventListener("change", () => {
+        console.log("Bırakıldı, değer:", sliderT.value);
+        let value = Number(sliderT.value);
+        sendData("T:" + value);
+    });
+
+    sliderT.addEventListener("input", e => {
+        valueT.textContent = Number(sliderT.value);
+    });
+
+    //----------------------------------------------------------------------------- Keskin viraj öncesi hızı
+    const sliderC = document.getElementById("slider-c");
+    let valueC = document.querySelector("#val-c");
+    
+    document.getElementById("btn-increase-c").addEventListener("click", ()=>{
+        let value = Number(sliderC.value) + 10;
+
+        if(value > 1000){
+            return;
+        }
+
+        sliderC.value = value;
+        valueC.textContent = Number(value);
+        sendData("C:" + value);
+    });
+
+    document.getElementById("btn-decrease-c").addEventListener("click", ()=>{
+        let value = Number(sliderC.value) - 10;
+        if(value < 200){
+            return;
+        }
+        
+        sliderC.value = value;
+        valueC.textContent = Number(value);
+        sendData("C:" + value);
+    });
+
+    
+    sliderC.addEventListener("change", () => {
+        console.log("Bırakıldı, değer:", sliderC.value);
+        let value = Number(sliderC.value);
+        sendData("C:" + value);
+    });
+
+    sliderC.addEventListener("input", e => {
+        valueC.textContent = Number(sliderC.value);
+    });
+
+
+    //------------------------------------------------------------------------------
+
+    document.querySelector("#btn-calibrate").addEventListener("click", ()=>{
+        if (confirm("Sensörler kalibre edilecek ...")) {
+            sendData("CLBRT");
+        } 
+    });
+
+    document.querySelector("#btn-line-follow").addEventListener("click", ()=>{
+        if (confirm("Robot çizgi izleyecek ...")) {
+            sendData("DRIVE");
+        } 
+    });
+
+    document.querySelector("#btn-update-qtr").addEventListener("click", ()=>{
+        sendData("QTR8A");
+    });
+
+    document.querySelector("#btn-update-hcsr").addEventListener("click", ()=>{
+        sendData("TRIG");
+        setTimeout(()=>{
+            sendData("HCSR");
+        }, 300); 
+    });
+
+    document.querySelector("#btn-cancel").addEventListener("click", ()=>{
+        sendData("STOP");
+    });
+
+    document.querySelector("#btn-update").addEventListener("click", ()=>{
+        sendData("GET_PID");
+    });
+
+    document.querySelector("#btn-test").addEventListener("click", ()=>{
+        if (confirm("Robot test sürüşü yapacak ...")) {
+            sendData("TESTD");
+        }
+    });
+
+    document.querySelector("#btn-save").addEventListener("click", ()=>{
+        if (confirm("Tüm ayarlar kayıt edilecek ...")) {
+            sendData("SAVE");
+        }
+    });
+
+    function crc16_modbus(bytes) {
+        let crc = 0xFFFF;
+
+        for (let i = 0; i < bytes.length; i++) {
+            crc ^= bytes[i];
+
+            for (let j = 0; j < 8; j++) {
+                if (crc & 1)
+                    crc = (crc >> 1) ^ 0xA001;
+                else
+                    crc >>= 1;
+            }
+        }
+        return crc & 0xFFFF;
+    }
+
+    function buildPacket(corners) {
+        const START_BYTE = 0xAA;  // STM ile aynı olmalı
+        const END_BYTE   = 0x55;
+
+        const count = corners.length;
+
+        let bytes = [];
+
+        bytes.push(START_BYTE);
+        bytes.push(count);
+
+        for (let value of corners) {
+            bytes.push(value & 0xFF);         // low byte
+            bytes.push((value >> 8) & 0xFF);  // high byte
+        }
+
+        const crc = crc16_modbus(bytes);
+
+        bytes.push(crc & 0xFF);        // CRC low
+        bytes.push((crc >> 8) & 0xFF); // CRC high
+        bytes.push(END_BYTE);
+
+        return new Uint8Array(bytes);
+    }
+
+    async function sendCorners(corners) {
+        if (!txChar) return;
+
+        pulseCounts = pulseCounts.filter(value => value !== 0);
+
+        if(pulseCounts.length == 0){
+            return;
+        }
+
+        let sorted = [...pulseCounts].sort((a,b)=>a-b);
+
+        const packet = buildPacket(sorted); // buildPacket JS tarafında yukarı yazdığımız
+        await txChar.writeValue(packet);
+    }
+
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    document.querySelector("#save-pist").addEventListener("click", ()=>{
+
+        if(pulseCounts.length == 0){
+            alert("En az bir nokta ekleyin");
+            return;
+        }
+        sendCorners(pulseCounts);
+    });
+
+    function setTrackLength(length){
+        
+        let overflow = false;
+
+        for(let i = pulseCounts.length - 1; i >= 0; i--){
+            if(pulseCounts[i] > length){
+                //removePoint(i);
+                overflow = true;
+                break;
+            }
+        }
+
+        if(overflow){
+            alert("Pist uzunluğunun dışında kalan noktalar var");
+        }
+        else{
+            trackLength = length;
+            redrawAll();
+            return true;
+        }
+    }
+
+
+    function addCornerPoint(posY){
+        if(pulseCounts.length >= maxPoints) return;
+        
+        let rect = container.getBoundingClientRect();
+        let y = posY - rect.top;
+        let ratio = y / rect.height;
+        let pCount = Math.round(ratio * trackLength);
+
+        pulseCounts.push(pCount);
+        createPointElement(pulseCounts.length - 1);
+        redrawAll();
+    }
+
+    function addCornerPointFromDistance(pCount){
+        if(pulseCounts.length >= maxPoints) return;
+
+        let rect = container.getBoundingClientRect();
+        let ratio = pCount / trackLength;
+        let y = ratio * rect.height;
+        let posY = y + rect.top;
+
+        pulseCounts.push(pCount);
+
+        createPointElement(pulseCounts.length - 1);
+        redrawAll();
+    }
+
+    line.addEventListener("click", function(e){
+        addCornerPoint(e.clientY);
+    });
+
+    function createPointElement(index){
+        let point = document.createElement("div");
+        point.className = "point";
+
+        let label = document.createElement("div");
+        label.className = "label-cm";
+        point.appendChild(label);
+
+        label = document.createElement("div");
+        label.className = "label-pulse";
+        point.appendChild(label);
+
+        container.appendChild(point);
+        pointElements[index] = point;
+
+        makeDraggable(point, index);
+    }
+
+    function removePoint(index){
+        // 1. pulseCounts'tan kaldır
+        pulseCounts.splice(index, 1);
+
+        // 2. pointElements'ten kaldır ve DOM'dan sil
+        let point = pointElements.splice(index, 1)[0];
+        if(point) point.remove();
+
+        // 3. Kalan noktaların indexlerini güncelle
+        pointElements.forEach((p, i) => {
+            p.dataset.index = i;
+        });
+
+        redrawAll();
+    }
+
+    function makeDraggable(element, index){
+        element.dataset.index = index; // dataset ile index sakla
+
+        element.addEventListener("pointerdown", e => {
+            e.preventDefault();
+
+            const startX = e.clientX;
+
+            function move(e){
+                const idx = parseInt(element.dataset.index);
+                if(idx === undefined) return;
+
+                let rect = container.getBoundingClientRect();
+                let y = e.clientY - rect.top;
+
+                if(y < 0) y = 0;
+                if(y > rect.height) y = rect.height;
+
+                let ratio = y / rect.height;
+                pulseCounts[idx] = Math.round(ratio * trackLength);
+
+                // X ekseninde silme kontrolü
+                const dx = e.clientX - startX;
+                const eraseThreshold = 100; // yeni eşik, önce 30px idi
+                if(Math.abs(dx) > eraseThreshold){
+                    removePoint(idx);
+                    document.removeEventListener("pointermove", move);
+                    return;
+                }
+
+                redrawAll();
+            }
+
+            function stop(){
+                document.removeEventListener("pointermove", move);
+                document.removeEventListener("pointerup", stop);
+            }
+
+            document.addEventListener("pointermove", move);
+            document.addEventListener("pointerup", stop);
+        });
+    }
+
+
+
+    function redrawAll(){
+        let rect = container.getBoundingClientRect();
+
+        for(let i = 0; i < pulseCounts.length; i++){
+            let pulseCount = pulseCounts[i];
+            let point = pointElements[i];
+
+            if(!point) continue; // kritik koruma
+
+            let ratio = pulseCount / trackLength;
+            let py = ratio * rect.height;
+
+            let cm = (pulseCount * Math.PI * TIRE_DIAMETER) / MAGNET_COUNT;
+            cm = Number(cm).toFixed(2);
+
+            point.style.top = py + "px";
+            point.querySelector(".label-cm").innerText = cm + " cm";
+            point.querySelector(".label-pulse").innerText = pulseCount + " pl";
+        }
+    }
+
+function clearAllPoints(){
+    // DOM’daki point’leri sil
+    pointElements.forEach(p => {
+        if(p) p.remove();
+    });
+
+    // Dizileri sıfırla
+    pointElements = [];
+    pulseCounts = [];
+}
+
+    window.addEventListener("resize", redrawAll);
+
+    // -------------------- Paket Durumları --------------------
+    const PKT_WAIT_START = 0;
+    const PKT_WAIT_CMD = 1;
+    const PKT_READ_COUNT = 2;
+    const PKT_READ_DATA  = 3;
+    const PKT_READ_CRC_L = 4;
+    const PKT_READ_CRC_H = 5;
+    const PKT_WAIT_END   = 6;
+
+    let pktState = PKT_WAIT_START;
+    let pktCmd = 0;
+    let pktCount = 0;
+    let pktIndex = 0;
+    let bytePair = 0;
+    let calculatedCRC = 0xFFFF;
+    let receivedCRC = 0;
+    let tempProfile = [];
+
+    const START_BYTE = 0xAA;
+    const END_BYTE   = 0x55;
+    const CORNER_COUNT = 48;
+    const CMD_SET_CORNERS = 0x01;
+
+    // -------------------- CRC16 Modbus --------------------
+    function CRC16_Update(crc, data) {
+        crc ^= data;
+        for (let i = 0; i < 8; i++) {
+            if (crc & 1) crc = (crc >> 1) ^ 0xA001;
+            else crc >>= 1;
+        }
+        return crc & 0xFFFF;
+    }
+
+    let sensorDataArrived = true;
+    // -------------------- Byte parser --------------------
+    function parseIncomingBytes(bytes) {
+        for (let c of bytes) {  
+            if (pktState !== PKT_WAIT_START || c === START_BYTE) {
+                switch (pktState) {
+                    case PKT_WAIT_START:
+                        if (c === START_BYTE) {
+                            pktState = PKT_WAIT_CMD;
+                            calculatedCRC = 0xFFFF;
+                            calculatedCRC = CRC16_Update(calculatedCRC, c);
+                        }
+                        continue;
+
+                    case PKT_WAIT_CMD:
+                        pktCmd = c;
+                        calculatedCRC = CRC16_Update(calculatedCRC, c);
+                        pktState = PKT_READ_COUNT;
+                        continue;
+
+                    case PKT_READ_COUNT:
+                        if (c <= CORNER_COUNT) {
+                            pktCount = c;
+                            pktIndex = 0;
+                            bytePair = 0;
+                            calculatedCRC = CRC16_Update(calculatedCRC, c);
+                            tempProfile = new Array(pktCount);
+                            pktState = PKT_READ_DATA;
+                        } else {
+                            pktState = PKT_WAIT_START;
+                        }
+                        continue;
+
+                    case PKT_READ_DATA:
+                        calculatedCRC = CRC16_Update(calculatedCRC, c);
+                        if (bytePair === 0) {
+                            tempProfile[pktIndex] = c;
+                            bytePair = 1;
+                        } else {
+                            tempProfile[pktIndex] |= (c << 8);
+                            bytePair = 0;
+                            pktIndex++;
+                            if (pktIndex >= pktCount) pktState = PKT_READ_CRC_L;
+                        }
+                        continue;
+
+                    case PKT_READ_CRC_L:
+                        receivedCRC = c;
+                        pktState = PKT_READ_CRC_H;
+                        continue;
+
+                    case PKT_READ_CRC_H:
+                        receivedCRC |= (c << 8);
+                        pktState = PKT_WAIT_END;
+                        continue;
+
+                    case PKT_WAIT_END:
+                        if (c === END_BYTE) {
+                            if (receivedCRC === calculatedCRC) { // Paket doğru
+                                if(pktCmd == 0x01){
+                                    clearAllPoints(); 
+
+                                    let max = Math.max(...tempProfile);
+                                    setTrackLength(max);
+                                    sliderM.value = max;
+                                    updateTrackLengthSlider(max);
+
+                                    [...tempProfile].forEach((d)=>{
+                                        addCornerPointFromDistance(d);
+                                    })                                
+                                }
+                                else if(pktCmd == 0x02){
+                                    setPIDValues([...tempProfile]);
+                                    setTimeout(()=>{
+                                        sendData("PIST");
+                                    },200);
+                                }
+                                else if(pktCmd == 0x03){
+                                    let low = tempProfile[0];
+                                    let high = tempProfile[1];
+
+                                    let time32 = (high << 16) | low;
+
+                                    let totalSeconds = (time32 / 1000).toFixed(3);
+                                    alert(`${totalSeconds} saniyede bitirdi.`);
+                                    console.log("Finish time: " + totalSeconds + "saniye");
+                                }
+                                else if(pktCmd == 0x04){
+                                    updateQtrSensor(tempProfile);
+                                    //console.log(tempProfile.join(" | "));
+                                }
+                                else if(pktCmd == 0x05){
+                                    document.querySelector(".hcsr-sensor-data").textContent = tempProfile[0] + " cm";
+                                }
+
+                                
+                                //console.log("OK");
+                            } else {
+                                console.log("ERR");
+                            }
+                        }
+                        pktState = PKT_WAIT_START;
+                        continue;
+                }
+            }
+        }
+    }
+</script>
+
+
+<!--
+const sliderM = document.getElementById("slider-m");
+    let valueM = document.querySelector("#val-m");
+    
+    document.getElementById("btn-increase-m").addEventListener("click", ()=>{
+        let value = Number(sliderM.value) + 1;
+
+        if(value > 2000){
+            return;
+        }
+
+        sliderM.value = value;
+        valueM.textContent = Number(value) + " cm";
+
+        setTrackLength(value);
+        sendData("M:" + value);
+    });
+
+    document.getElementById("btn-decrease-m").addEventListener("click", ()=>{
+        let value = Number(sliderM.value) - 1;
+        if(value < 0){
+            return;
+        }
+        
+        sliderM.value = value;
+        valueM.textContent = Number(value) + " cm";
+        setTrackLength(value);
+        sendData("M:" + value);
+    });
+
+    
+    sliderM.addEventListener("change", () => {
+        console.log("Bırakıldı, değer:", sliderM.value);
+        let value = Number(sliderM.value);
+
+        setTrackLength(value);
+        sendData("M:" + value);
+    });
+
+    sliderM.addEventListener("input", e => {
+        valueM.textContent = Number(sliderM.value) + " cm";
+    });
+
+
+
+    const sliderI = document.getElementById("slider-i");
+    let valueI = document.querySelector("#val-i");
+    
+    document.getElementById("btn-increase-i").addEventListener("click", ()=>{
+        let value = Number(sliderI.value) + 0.01;
+
+        if(value > 10){
+            return;
+        }
+
+        sliderI.value = value;
+        valueI.textContent = Number(value).toFixed(2);
+        sendData("I:" + (value * 1000));
+    });
+
+    document.getElementById("btn-decrease-i").addEventListener("click", ()=>{
+        let value = Number(sliderI.value) - 0.01;
+        if(value < 0){
+            return;
+        }
+        
+        sliderI.value = value;
+        valueI.textContent = Number(value).toFixed(2);
+        sendData("I:" + (value * 1000));
+    });
+
+    
+    sliderI.addEventListener("change", () => {
+        console.log("Bırakıldı, değer:", sliderI.value);
+        let value = Number(sliderI.value);
+        sendData("I:" + (value * 1000));
+    });
+
+    sliderI.addEventListener("input", e => {
+        valueI.textContent = Number(sliderI.value).toFixed(2);
+    });
+-->
