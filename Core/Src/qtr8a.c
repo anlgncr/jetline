@@ -3,7 +3,6 @@
 #include "stdio.h"
 #include "led.h"
 
-#define INTERVAL 1
 #define VOLTAGE_INDEX 8
 
 static uint16_t dma_buffer[QTR8A_CHANNEL_COUNT + 1]; // voltaj ölçümü için 51K, 10K voltaj bölücü devre 12.6V (3S pil) 2482 = Tam dolu
