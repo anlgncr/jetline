@@ -129,17 +129,6 @@
         width: 300px;
     }
 
-    .icon-container{
-        position: absolute;
-        right: 0;
-        top:0;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 2em;
-    }
-
     .drive-container{
         display: flex;
         justify-content: space-between;
@@ -151,6 +140,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: .85em;
     }
 
     .setting-wrapper{
@@ -188,11 +178,6 @@
         padding: 1em;
         background-color: rgb(236, 236, 236);
         font-size: .8em;
-    }
-
-    .icon-btn{
-        font-size: .7em;
-        margin:.2em;
     }
     
     #trackContainer{
@@ -270,7 +255,7 @@
         position: relative;
     }
     .qtr-sensor-data{
-        background-color: rgb(224, 224, 224);
+        background-color: rgb(170, 170, 240);
         height: 80%;
         width: 100%;
     }
@@ -282,6 +267,21 @@
         font-size:0.7em;
         background-color: #ffffff;
     }
+
+      .icon-container{
+            position: absolute;
+            right: 0;
+            top:0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+        }
+        .icon-btn{
+            font-size: .7em;
+            margin:.2em;
+        }
 
     @media screen and (min-width: 500px) {
         .button-container{
@@ -307,9 +307,9 @@
             </div> 
 
             <div class="setting-wrapper">
-                <div class="setting-title"> PID & Hız Ayarı  <div class="icon-container"> <span id="btn-update" class="btn icon-btn">🔄</span> <span id="btn-save" class="btn icon-btn">💾</span></div> </div>
+                <div class="setting-title">💯 PID & Hız Ayarı </div>
                 <div>
-                    <div class="slider-value-wrapper"> <span class="title">Oran Katsayısı (P) :</span> <span id="val-p">0</span> </div>
+                    <div class="slider-value-wrapper"> <span class="title">Oran Katsayısı (P)</span> <span id="val-p" class="val-style">0</span> </div>
                     <div class="slider-wrapper"> 
                         <div class="btn-setting btn" id="btn-decrease-p"><b>-</b></div>
                         <div class="slider-wrapper"><input class="slider" id="slider-p" type="range" step="0.01" min="0" max="5" value="0"></div>
@@ -317,17 +317,8 @@
                     </div>
                 </div>
 
-                <!--<div>
-                    <div class="slider-value-wrapper"> <span class="title">İntegral Katsayısı (I) :</span> <span id="val-i">0</span> </div>
-                    <div class="slider-wrapper"> 
-                        <div class="btn-setting btn" id="btn-decrease-i"><b>-</b></div>
-                        <div class="slider-wrapper"><input class="slider" id="slider-i" type="range" step="0.01" min="0" max="10" value="0"></div>
-                        <div class="btn-setting btn" id="btn-increase-i"><b>+</b></div>
-                    </div>
-                </div> -->
-
                 <div>
-                    <div class="slider-value-wrapper"> <span class="title">Türev Katsayısı (D) :</span> <span id="val-d">0</span> </div>
+                    <div class="slider-value-wrapper"> <span class="title">Türev Katsayısı (D)</span> <span id="val-d" class="val-style">0</span> </div>
                     <div class="slider-wrapper"> 
                         <div class="btn-setting btn" id="btn-decrease-d"><b>-</b></div>
                         <div class="slider-wrapper"><input class="slider" id="slider-d" type="range" step="0.001" min="0" max="1" value="0"></div>
@@ -336,7 +327,7 @@
                 </div>
 
                 <div>
-                    <div class="slider-value-wrapper"> <span class="title">Ana Hız :</span> <span id="val-s">0</span> </div>
+                    <div class="slider-value-wrapper"> <span class="title">Ana Hız</span> <span id="val-s" class="val-style">0</span> </div>
                     <div class="slider-wrapper"> 
                         <div class="btn-setting btn" id="btn-decrease-s"><b>-</b></div>
                         <div class="slider-wrapper"><input class="slider" id="slider-s" type="range" step="1" min="0" max="1000" value="0"></div>
@@ -345,7 +336,7 @@
                 </div>
 
                 <div>
-                    <div class="slider-value-wrapper"> <span class="title">Köşe Dönüş Hızı :</span> <span id="val-t">0</span> </div>
+                    <div class="slider-value-wrapper"> <span class="title">Çizgi Arama Hızı</span> <span id="val-t" class="val-style">0</span> </div>
                     <div class="slider-wrapper"> 
                         <div class="btn-setting btn" id="btn-decrease-t"><b>-</b></div>
                         <div class="slider-wrapper"><input class="slider" id="slider-t" type="range" step="1" min="200" max="1000" value="0"></div>
@@ -353,33 +344,68 @@
                     </div>
                 </div>
 
+                <style>
+                    .val-style{
+                        background-color: rgb(58, 74, 143);
+                        border-radius: .2em;
+                        color:white;
+                        padding: .2em;
+                        font-weight: bold;
+                        margin-left: 1em;
+                    }
+                </style>
+
                 <div>
-                    <div class="slider-value-wrapper"> <span class="title">Köşe öncesi hız :</span> <span id="val-c">0</span> </div>
+                    <div class="slider-value-wrapper"> <span class="title">Güvenli Hız</span> <span id="val-c" class="val-style">0</span> </div>
                     <div class="slider-wrapper"> 
                         <div class="btn-setting btn" id="btn-decrease-c"><b>-</b></div>
                         <div class="slider-wrapper"><input class="slider" id="slider-c" type="range" step="1" min="200" max="1000" value="0"></div>
                         <div class="btn-setting btn" id="btn-increase-c"><b>+</b></div>
                     </div>
                 </div>
+
+                <div>
+                    <div class="slider-value-wrapper"> <span class="title">Frenleme Mesafesi</span> <span id="val-b" class="val-style">0</span> </div>
+                    <div class="slider-wrapper"> 
+                        <div class="btn-setting btn" id="btn-decrease-b"><b>-</b></div>
+                        <div class="slider-wrapper"><input class="slider" id="slider-b" type="range" step="1" min="1" max="70" value="0"></div>
+                        <div class="btn-setting btn" id="btn-increase-b"><b>+</b></div>
+                    </div>
+                </div>
             </div>
 
             <div class="setting-wrapper">
-                <div class="setting-title"> Köşeye gelmeden önce yavaşla </div>
+                <div class="setting-title">⚙️ Adaptif Hız </div>
                 <div class="setting-container">
                     <label>
-                        <input type="radio" name="corner-mode" value="4" corner-mode="yes" cmd="flag">
-                        Evet
+                        <input type="radio" name="speed-mode" value="8" speed-mode="yes" cmd="flag">
+                        Açık
                     </label>
 
                     <label>
-                        <input type="radio" name="corner-mode" value="5" corner-mode="no" cmd="flag">
-                        Hayır
+                        <input type="radio" name="speed-mode" value="9" speed-mode="no" cmd="flag">
+                        Kapalı
                     </label>
                 </div>
             </div>
 
             <div class="setting-wrapper">
-                <div class="setting-title"> Çizgi rengi </div>
+                <div class="setting-title">🔔 Buzzer</div>
+                <div class="setting-container">
+                    <label>
+                        <input type="radio" name="corner-mode" value="4" corner-mode="yes" cmd="flag">
+                        Açık
+                    </label>
+
+                    <label>
+                        <input type="radio" name="corner-mode" value="5" corner-mode="no" cmd="flag">
+                        Kapalı
+                    </label>
+                </div>
+            </div>
+
+            <div class="setting-wrapper">
+                <div class="setting-title">⬛ Çizgi rengi </div>
                 <div class="setting-container">
                     <label>
                         <input type="radio" name="lineColor" value="1" linetype="black" cmd="flag">
@@ -400,7 +426,7 @@
             </div>
 
             <div class="setting-wrapper">
-                <div class="setting-title"> Pist  <div class="icon-container"> <span id="save-pist" class="btn icon-btn">💾</span> </div></div>
+                <div class="setting-title">🏁 Pist </div>
                 <div class="setting-container">
                     <label>
                         <input type="radio" name="pist-select" value="6" pist="A" cmd="flag">
@@ -416,45 +442,86 @@
                     <div class="slider-value-wrapper"> <span class="title">Pist uzunluğu :</span> <span id="val-m">0</span> </div>
                     <div class="slider-wrapper"> 
                         <div class="btn-setting btn" id="btn-decrease-m"><b>-</b></div>
-                        <div class="slider-wrapper"><input class="slider" id="slider-m" type="range" step="1" min="0" max="2000" value="0"></div>
+                        <div class="slider-wrapper"><input class="slider" id="slider-m" type="range" step="1" min="0" max="7000" value="0"></div>
                         <div class="btn-setting btn" id="btn-increase-m"><b>+</b></div>
                     </div>
                 </div>
                 <div id="trackContainer">
                     <div id="trackLine"></div>
                 </div>
+
+
+                <style>
+                    .dual-button-container{
+                        display:flex;
+                        justify-content: end;
+                    }
+
+                    .dual-button-container div{
+                        border-radius: 5px;
+                        margin: .5em;
+                        padding: .5em;
+                        background-color: cornflowerblue;
+                        color:white;
+                        font-weight: bold;
+                        font-size:0.85em;
+                    }
+
+                </style>
+                <div class="dual-button-container">
+                    <label><input type="file" id="loadPist" style="display: none;" accept=".json"><div id="btn-load-local" class="btn">Yükle</div></label>
+                    <div id="btn-save-local" class="btn">İndir</div>
+                    <div id="btn-save-pist" class="btn">Cihaza aktar</div>
+                </div>
+                
             </div>
 
             <div class="setting-wrapper">
-                <div class="setting-title"> QTR8A Sensör Verileri <div class="icon-container"> <span id="btn-update-qtr" class="btn icon-btn">🔄</span> </div> </div>
+                <div class="setting-title">🔴 Kızılötesi Sensörü <div class="icon-container"> <span id="btn-update-qtr" class="btn icon-btn">🔄</span> </div> </div>
                     <div class="qtr-sensor-container">
-                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
-                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
-                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
-                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
-                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
-                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
-                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
-                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value">0</div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value"></div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value"></div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value"></div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value"></div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value"></div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value"></div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value"></div></div>
+                        <div class="qtr-sensor-data-container"><div class="qtr-sensor-data"></div><div class="qtr-value"></div></div>
                     </div>
+                    <br>
+                    <div class="sensor-error">Hata <span> - </span></div>
             </div>
 
             <div class="setting-wrapper">
-                <div class="setting-title"> HC-SR04 Sensör Verisi <div class="icon-container"> <span id="btn-update-hcsr" class="btn icon-btn">🔄</span> </div> </div>
-                    <div class="setting-container">
-                        <div class="hcsr-sensor-data"> Veri almak için güncelleyin</div>
-                    </div>
+                <div class="setting-title">📡 Ultrasonik Sensör <div class="icon-container"> <span id="btn-update-hcsr" class="btn icon-btn">🔄</span> </div> </div>
+                <div class="setting-container">
+                    <div class="hcsr-sensor-data"> Veri almak için güncelleyin</div>
+                </div>
             </div>
 
-            
+            <div class="setting-wrapper">
+                <div class="setting-title">0️⃣1️⃣ Enkoder <div class="icon-container"> <span id="btn-update-enc" class="btn icon-btn">🔄</span> </div> </div>
+                <div class="setting-container">
+                    <div class="enc-sensor-data"> Veri almak için güncelleyin </div>
+                </div>
+            </div>
+
+            <div class="setting-wrapper">
+                <div class="setting-title">🔋 Batarya - 3S <div class="icon-container"> <span id="btn-update-battery" class="btn icon-btn">🔄</span> </div> </div>
+                <div class="setting-container">
+                    <div class="battery-data"> Veri almak için güncelleyin </div>
+                </div>
+            </div>
 
        </div>
 
        <div class="button-container">
             <div class="drive-container">
+                <div id="btn-refresh-all" class="btn-cmd btn">  Yenile  </div>
                 <div id="btn-calibrate" class="btn-cmd btn">  Kalibre Et  </div>
                 <div id="btn-test" class="btn-cmd btn">  Test Sürüşü  </div>
                 <div id="btn-line-follow" class="btn-cmd btn">  Çizgi Takip  </div>
+                <div id="btn-save-all" class="btn-cmd btn">  Kaydet  </div>
                 <div id="btn-cancel" class="btn-cmd btn">  İptal  </div>
             </div>
         </div>
@@ -478,20 +545,94 @@
     let pulseCounts = [];
     let pointElements = [];
 
+    document.querySelector("#loadPist").addEventListener("change", function(e){
+        let file = e.target.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function(event){
+            let text = event.target.result;
+            let corners = JSON.parse(text);
+
+            clearAllPoints(); 
+
+            let max = Math.max(...corners);
+            setTrackLength(max);
+            sliderM.value = max;
+            updateTrackLengthSlider(max);
+
+            [...corners].forEach((d)=>{
+                addCornerPointFromDistance(d);
+            });
+        };
+
+        reader.readAsText(file);
+    });
+
+
+
+    document.querySelector("#btn-save-local").addEventListener("click", ()=>{
+        pulseCounts = pulseCounts.filter(value => value !== 0);
+
+        if(pulseCounts.length == 0){
+            alert("Geçersiz pist");
+            return;
+        }
+
+        let sorted = [...pulseCounts].sort((a,b)=>a-b);
+        let json = JSON.stringify(sorted);
+
+        let blob = new Blob([json], {type:"application/json"});
+
+        // timestamp oluştur
+        let zaman = new Date();
+        let timestamp =
+            zaman.getFullYear() + "-" +
+            String(zaman.getMonth()+1).padStart(2,'0') + "-" +
+            String(zaman.getDate()).padStart(2,'0') + "_" +
+            String(zaman.getHours()).padStart(2,'0') + "-" +
+            String(zaman.getMinutes()).padStart(2,'0') + "-" +
+            String(zaman.getSeconds()).padStart(2,'0');
+
+        let dosyaAdi = "pist_" + timestamp + ".json";
+
+        let link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = dosyaAdi;
+
+        link.click();
+    });
+
     const qtrSensorContainer = document.querySelectorAll(".qtr-sensor-data-container");
 
     function updateQtrSensor(sensorArray){
+        let sumVal = 0;
+        let sumWeight = 0;
+        let weights = [-350, -250, -150, -50, 50, 150, 250, 350];
+
         sensorArray.forEach((data, index) => {
-        
-            let color = 255 - Math.round(255 * (data / 4095));
-            let percent = Number(100 * (data/4095)).toFixed(1);
+            let color = 255 - Math.round(255 * (data / 100));
+            let percent = Number(data).toFixed(1);
             
             const qtrSensorData = qtrSensorContainer[index].querySelector(".qtr-sensor-data");
             const qtrSensorDataVal = qtrSensorContainer[index].querySelector(".qtr-value");
 
             qtrSensorData.style.backgroundColor = `rgb(${color}, ${color}, ${color})`;
             qtrSensorDataVal.textContent = "%" + percent;
+
+            if(data > 10){
+                sumVal += data;
+                sumWeight += data * weights[index];
+            }
         });
+
+        if (sumVal == 0) {
+            document.querySelector(".sensor-error span").textContent = "0";
+        }
+        else{
+            document.querySelector(".sensor-error span").textContent =  (sumWeight / sumVal).toFixed(1);
+        }
+        
+       
 
     }
 
@@ -591,14 +732,16 @@
         valueS.textContent = Number(values[2]); // Base speed
         valueT.textContent = values[3]; // Turning speed
         valueC.textContent = values[4]; // Corner speed
+        valueB.textContent = pulseCountToCm(values[5]) + " cm"; // Slow down distance (cm)
 
-        let flags = values[5]; // flags
+        let flags = values[6]; // flags
 
         sliderP.value = valueP.textContent;
         sliderD.value = valueD.textContent;
         sliderS.value = valueS.textContent;
         sliderT.value = valueT.textContent;
         sliderC.value = valueC.textContent;
+        sliderB.value = values[5];
 
         let autoDetect = ((flags & 0x02) !== 0); // auto detect
 
@@ -629,6 +772,12 @@
             document.querySelector('input[pist="B"]').checked = true;
         } else {
             document.querySelector('input[pist="A"]').checked = true;
+        }
+
+        if ((flags & 0x10) !== 0) {
+            document.querySelector('input[speed-mode="yes"]').checked = true;
+        } else {
+            document.querySelector('input[speed-mode="no"]').checked = true;
         }
     }
 
@@ -767,12 +916,51 @@
     });
 
     //----------------------------------------------------------------------------------------
+
+    const sliderB = document.getElementById("slider-b");
+    let valueB = document.querySelector("#val-b");
+    
+    document.getElementById("btn-increase-b").addEventListener("click", ()=>{
+        let value = Number(sliderB.value) + 1;
+
+        if(value > 70){
+            return;
+        }
+
+        sliderB.value = value;
+        valueB.textContent = pulseCountToCm(Number(value)) + " cm";
+        sendData("B:" + value);
+    });
+
+    document.getElementById("btn-decrease-b").addEventListener("click", ()=>{
+        let value = Number(sliderB.value) - 1;
+        if(value < 1){
+            return;
+        }
+        
+        sliderB.value = value;
+        valueB.textContent = pulseCountToCm(Number(value)) + " cm";
+        sendData("B:" + value);
+    });
+
+    sliderB.addEventListener("change", () => {
+        console.log("Bırakıldı, değer:", sliderB.value);
+        let value = Number(sliderB.value);
+        sendData("B:" + value);
+    });
+
+    sliderB.addEventListener("input", e => {
+        valueB.textContent = pulseCountToCm(Number(sliderB.value)) + " cm";
+    });
+
+    //----------------------------------------------------------------------------------------
+
     const sliderM = document.getElementById("slider-m");
     let valueM = document.querySelector("#val-m");
     
     document.getElementById("btn-increase-m").addEventListener("click", ()=>{
         let value = Number(sliderM.value) + 1;
-        if(value > 2000) return;
+        if(value > 7000) return;
     
         sliderM.value = value;
         updateTrackLengthSlider(value);
@@ -810,7 +998,7 @@
     let valueT = document.querySelector("#val-t");
     
     document.getElementById("btn-increase-t").addEventListener("click", ()=>{
-        let value = Number(sliderT.value) + 10;
+        let value = Number(sliderT.value) + 1;
 
         if(value > 1000){
             return;
@@ -822,7 +1010,7 @@
     });
 
     document.getElementById("btn-decrease-t").addEventListener("click", ()=>{
-        let value = Number(sliderT.value) - 10;
+        let value = Number(sliderT.value) - 1;
         if(value < 200){
             return;
         }
@@ -848,7 +1036,7 @@
     let valueC = document.querySelector("#val-c");
     
     document.getElementById("btn-increase-c").addEventListener("click", ()=>{
-        let value = Number(sliderC.value) + 10;
+        let value = Number(sliderC.value) + 1;
 
         if(value > 1000){
             return;
@@ -860,7 +1048,7 @@
     });
 
     document.getElementById("btn-decrease-c").addEventListener("click", ()=>{
-        let value = Number(sliderC.value) - 10;
+        let value = Number(sliderC.value) - 1;
         if(value < 200){
             return;
         }
@@ -885,13 +1073,13 @@
     //------------------------------------------------------------------------------
 
     document.querySelector("#btn-calibrate").addEventListener("click", ()=>{
-        if (confirm("Sensörler kalibre edilecek ...")) {
+        if (confirm("Dikkat! Robot hareket edecek...")) {
             sendData("CLBRT");
         } 
     });
 
     document.querySelector("#btn-line-follow").addEventListener("click", ()=>{
-        if (confirm("Robot çizgi izleyecek ...")) {
+        if (confirm("Dikkat! Robot hareket edecek...")) {
             sendData("DRIVE");
         } 
     });
@@ -907,24 +1095,37 @@
         }, 300); 
     });
 
+    document.querySelector("#btn-update-enc").addEventListener("click", ()=>{
+        if (confirm("Dikkat! Robot hareket edecek...")) {
+            sendData("TENC");
+            setTimeout(()=>{
+                sendData("GENC");
+            }, 1500); 
+        }
+    });
+
     document.querySelector("#btn-cancel").addEventListener("click", ()=>{
         sendData("STOP");
     });
 
-    document.querySelector("#btn-update").addEventListener("click", ()=>{
+    document.querySelector("#btn-refresh-all").addEventListener("click", ()=>{
         sendData("GET_PID");
     });
 
     document.querySelector("#btn-test").addEventListener("click", ()=>{
-        if (confirm("Robot test sürüşü yapacak ...")) {
+        if (confirm("Dikkat! Robot hareket edecek...")) {
             sendData("TESTD");
         }
     });
 
-    document.querySelector("#btn-save").addEventListener("click", ()=>{
-        if (confirm("Tüm ayarlar kayıt edilecek ...")) {
+    document.querySelector("#btn-save-all").addEventListener("click", ()=>{
+        if (confirm("Tüm ayarlar kayıt edilecek...")) {
             sendData("SAVE");
         }
+    });
+
+    document.querySelector("#btn-update-battery").addEventListener("click", ()=>{
+        sendData("VOLT");
     });
 
     function crc16_modbus(bytes) {
@@ -985,7 +1186,7 @@
 
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    document.querySelector("#save-pist").addEventListener("click", ()=>{
+    document.querySelector("#btn-save-pist").addEventListener("click", ()=>{
 
         if(pulseCounts.length == 0){
             alert("En az bir nokta ekleyin");
@@ -1022,8 +1223,13 @@
         
         let rect = container.getBoundingClientRect();
         let y = posY - rect.top;
+
         let ratio = y / rect.height;
         let pCount = Math.round(ratio * trackLength);
+
+        if(pCount <= 0){
+            return;
+        }
 
         pulseCounts.push(pCount);
         createPointElement(pulseCounts.length - 1);
@@ -1257,13 +1463,20 @@ function clearAllPoints(){
                                     clearAllPoints(); 
 
                                     let max = Math.max(...tempProfile);
-                                    setTrackLength(max);
-                                    sliderM.value = max;
-                                    updateTrackLengthSlider(max);
+                                
+                                    if(max == 0){
+                                        setTrackLength(0);
+                                        updateTrackLengthSlider(0);
+                                        sliderM.value = 0;
+                                    }else{
+                                        setTrackLength(max);
+                                        updateTrackLengthSlider(max);
+                                        sliderM.value = max;
 
-                                    [...tempProfile].forEach((d)=>{
-                                        addCornerPointFromDistance(d);
-                                    })                                
+                                        [...tempProfile].forEach((d)=>{
+                                            addCornerPointFromDistance(d);
+                                        });
+                                    }                        
                                 }
                                 else if(pktCmd == 0x02){
                                     setPIDValues([...tempProfile]);
@@ -1288,9 +1501,26 @@ function clearAllPoints(){
                                 else if(pktCmd == 0x05){
                                     document.querySelector(".hcsr-sensor-data").textContent = tempProfile[0] + " cm";
                                 }
+                                else if(pktCmd == 0x06){
+                                    let low = tempProfile[0];
+                                    let high = tempProfile[1];
 
-                                
-                                //console.log("OK");
+                                    let voltage = (high << 16) | low;
+
+                                    if(voltage > 1421) voltage = 1421;
+                                    if(voltage < 990) voltage = 990;
+
+                                    let remaining = voltage - 990;
+                                    let capacity = ((remaining / (1421 - 990)) * 100).toFixed(1); // 990 => boş yaklaşık 9V (3S)
+
+                                    document.querySelector(".battery-data").textContent = "% " + capacity;
+                                }
+                                else if(pktCmd == 0x07){
+                                    let leftEnc = tempProfile[0];
+                                    let rightEnc = tempProfile[1];
+                                    // Enkoder sayacı
+                                    document.querySelector(".enc-sensor-data").innerHTML = "Sol Enkoder:<b>" + leftEnc + "</b> " + "<br>Sağ Enkoder:<b>" + rightEnc + "</b>";
+                                }
                             } else {
                                 console.log("ERR");
                             }
